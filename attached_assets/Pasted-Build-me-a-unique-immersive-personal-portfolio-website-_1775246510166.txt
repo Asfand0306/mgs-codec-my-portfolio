@@ -1,0 +1,110 @@
+Build me a unique, immersive personal portfolio website themed around the Metal Gear Solid CODEC communication system. My name is Asfand Khan — I am a junior software developer just starting my career in software engineering.
+
+I am attaching a screenshot of the MGS Codec screen for reference. Study it carefully before designing anything.
+
+───────────────────────────
+THE CORE CONCEPT
+───────────────────────────
+The entire website should look and feel like the Metal Gear Solid Codec communication interface. This is the primary design language for the whole site — not just one section, but the entire experience.
+
+The codec screen in MGS features:
+- A dark / black background
+- Two character portrait panels on the left and right sides, framed with a green-tinted CRT screen aesthetic
+- A central frequency display panel showing a number like "140.85" in a digital readout font
+- PTT (Push to Talk) label and MEMORY label on the central panel
+- Green phosphor monochrome colour palette throughout — everything glows green like an old CRT terminal
+- Scanline effects and slight screen noise/grain for authenticity
+- Navigation arrows (◄ ►) on either side of the frequency display
+- Dialogue / text appears at the bottom of the screen in a classic codec subtitle style
+
+The overall colour palette is: near-black background, phosphor green (#00FF41 or similar), with occasional darker green tones for depth and panel borders. Think green-on-black hacker terminal meets military comms equipment.
+
+───────────────────────────
+NAVIGATION CONCEPT — CHANGING THE FREQUENCY
+───────────────────────────
+This is the central navigation mechanic of the site. Instead of a traditional nav bar or menu, the user navigates between sections by CHANGING THE RADIO FREQUENCY — just like tuning to different contacts in the game.
+
+Each section of the site is a different frequency:
+
+  140.85 — HOME / INTRO
+  (The opening screen — Asfand's portrait on one side, a "contact" portrait on the other, with a greeting message appearing in codec dialogue style at the bottom. Something like: "Snake, we've picked up a signal from a junior developer. Patching you through now.")
+
+  141.12 — ABOUT ME
+  (A codec "call" where Asfand is explaining who he is — written in first person but framed as a codec transmission. The portrait panel shows his photo or a stylised avatar.)
+
+  142.36 — SKILLS / TECH STACK
+  (Displayed as a MEMORY readout or mission briefing data — skills shown as a terminal-style list or signal bar indicators instead of generic progress bars.)
+
+  143.70 — PROJECTS
+  (Each project is a "mission file" that gets transmitted through the codec. Project cards should look like classified mission dossiers — code name, objective (description), tech used as "equipment", and links as "mission access".)
+
+  144.95 — EXPERIENCE & EDUCATION
+  (Framed as a personnel file / FOXHOUND dossier — timeline of background and training.)
+
+  146.00 — CONTACT
+  (The final codec call — "Transmission channels available:" with email, GitHub, LinkedIn displayed as frequency options or signal links. Include a downloadable CV button styled as "Download Dossier".)
+
+Navigation works by clicking the ◄ and ► arrow buttons on either side of the central frequency display to increment or decrement through the frequencies — with a satisfying "tuning" animation as the number rolls to the new frequency, and the portrait panels and content update accordingly.
+
+Optionally: show a small frequency "dial" or list of all available frequencies as a reference, like a contacts list from the codec menu.
+
+───────────────────────────
+VISUAL DESIGN DETAILS
+───────────────────────────
+- CRT scanline overlay on the entire screen (CSS scanlines using repeating linear gradients)
+- Subtle screen flicker animation on load and when changing frequency
+- Green phosphor glow effect on text and borders (text-shadow and box-shadow in green)
+- Digital/monospace font for the frequency number (something like "Share Tech Mono", "VT323", or "Orbitron" from Google Fonts)
+- Body text in the codec dialogue area should feel like it is being "typed out" — a typewriter text animation when a new frequency loads
+- Portrait panels should have a green tinted overlay / CRT frame effect — if using a real photo, apply a CSS green duotone or tint filter
+- Panel borders should look like military hardware — slightly bevelled or segmented, not soft rounded corners
+- The PTT and MEMORY labels should appear as small LCD-style labels
+- Scanline noise / static animation when transitioning between frequencies
+- Small blinking cursor or signal indicator to show the codec is "active"
+- The red border/frame seen in the MGS screenshot around the outermost edge of the screen is a nice touch — include a subtle version of it
+
+───────────────────────────
+SOUND (OPTIONAL BUT IDEAL)
+───────────────────────────
+If possible, include subtle optional sound effects:
+- The iconic codec "beeping" call sound when the page loads or when switching frequency (short, non-intrusive, with a mute toggle)
+- A static/tuning noise during frequency transitions
+
+Include a visible mute/unmute toggle so the user is in control.
+
+───────────────────────────
+LAYOUT STRUCTURE
+───────────────────────────
+The screen should be centred on the page and maintain the classic codec aspect ratio (roughly 4:3 or widescreen variant). On mobile, gracefully adapt — the portrait panels can stack or shrink, and the frequency navigation should still work with tap-left / tap-right areas.
+
+The layout has three main zones at all times:
+  LEFT PANEL — portrait of the "caller" (Asfand / a contact character)
+  CENTRE PANEL — frequency display, PTT/MEMORY labels, nav arrows
+  RIGHT PANEL — portrait of the "receiver" or a secondary character/logo
+  BOTTOM AREA — scrolling codec dialogue / content for that frequency
+
+───────────────────────────
+CONTENT SOURCE
+───────────────────────────
+I am providing my resume. Extract all real information from it:
+- My real name, skills, projects, education, work experience, and contact details
+- Do NOT invent placeholder content — use only what is in my resume
+- Reframe the content in the MGS thematic language (e.g. skills = "equipment", projects = "missions", education = "training") but keep the actual information accurate and professional
+
+───────────────────────────
+TECHNICAL REQUIREMENTS
+───────────────────────────
+- Vanilla HTML, CSS, JavaScript preferred — this should be a single polished page
+- Google Fonts for the digital/monospace display font
+- CSS animations for scanlines, flicker, typewriter effect, and frequency roll
+- Fully responsive — adapts well to mobile and tablet
+- No heavy frameworks needed — keep it lightweight and fast
+- Semantic and accessible where possible despite the custom aesthetic
+- Include a "classic mode" or fallback if desired — but the codec look is the priority
+
+───────────────────────────
+TONE
+───────────────────────────
+This portfolio should be completely unique. No recruiter will have seen anything like it. It should feel like opening a real MGS codec call — immersive, atmospheric, and memorable — while still communicating clearly that Asfand Khan is a skilled, passionate junior developer ready to start his career. The fun and creativity of the design IS the first impression.
+
+Let's build something unforgettable. Kept you waiting, huh?
