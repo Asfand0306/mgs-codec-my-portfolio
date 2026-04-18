@@ -3,58 +3,51 @@ export interface Section {
   code: string;
   label: string;
   dialogue: string;
-  speakerLeft: string;
-  speakerRight: string;
+  speaker: string;
 }
 
 export const SECTIONS: Section[] = [
   {
     freq: "140.85",
     code: "ABOUT",
-    label: "ABOUT",
+    label: "About",
     dialogue: "This is Asfandyar Khan — junior software developer, Alberta CA. Full-stack experience, strong front-end skills. Patching you through now.",
-    speakerLeft: "ASFANDYAR",
-    speakerRight: "COMMAND",
+    speaker: "ASFANDYAR",
   },
   {
     freq: "141.12",
     code: "SKILLS",
-    label: "SKILLS",
-    dialogue: "Equipment loadout confirmed. JavaScript, React, Next.js — all systems operational. Full stack capable.",
-    speakerLeft: "ASFANDYAR",
-    speakerRight: "COMMAND",
+    label: "Skills",
+    dialogue: "JavaScript, React, Next.js — all systems operational. Full-stack capable.",
+    speaker: "ASFANDYAR",
   },
   {
     freq: "142.36",
     code: "PROJECTS",
-    label: "PROJECTS",
-    dialogue: "Mission files decrypted. One completed operation with real-world client requirements. Dossier follows.",
-    speakerLeft: "ASFANDYAR",
-    speakerRight: "COMMAND",
+    label: "Projects",
+    dialogue: "One completed operation with real-world client requirements. Dossier follows.",
+    speaker: "ASFANDYAR",
   },
   {
     freq: "143.70",
     code: "QUALIFICATIONS",
-    label: "QUALIFICATIONS",
-    dialogue: "Personnel file retrieved. SAIT-trained, capstone-hardened. Ready to deploy professionally.",
-    speakerLeft: "ASFANDYAR",
-    speakerRight: "COMMAND",
+    label: "Qualifications",
+    dialogue: "SAIT-trained, capstone-hardened. Education and experience on file.",
+    speaker: "ASFANDYAR",
   },
   {
     freq: "144.95",
     code: "CERTIFICATIONS",
-    label: "CERTS",
+    label: "Certifications",
     dialogue: "Certification records pending. This channel is reserved — transmissions incoming.",
-    speakerLeft: "ASFANDYAR",
-    speakerRight: "COMMAND",
+    speaker: "ASFANDYAR",
   },
   {
     freq: "146.00",
     code: "CONTACT",
-    label: "CONTACT",
+    label: "Contact",
     dialogue: "All channels secure. Alberta, Canada — ready to receive. Make contact when ready.",
-    speakerLeft: "ASFANDYAR",
-    speakerRight: "COMMAND",
+    speaker: "ASFANDYAR",
   },
 ];
 

@@ -187,7 +187,7 @@ export default function App() {
           <div className="codec-body">
 
             {/* Left portrait */}
-            <PortraitPanel name={section.speakerLeft} side="left" />
+            <PortraitPanel name={section.speaker} side="left" />
 
             {/* Center panel */}
             <div className="center-panel">
@@ -248,8 +248,6 @@ export default function App() {
               </div>
             </div>
 
-            {/* Right portrait */}
-            <PortraitPanel name={section.speakerRight} side="right" />
           </div>
 
           {/* Dialogue */}
