@@ -1,101 +1,123 @@
-import { useEffect, useState } from "react";
-import { SKILLS, PROJECTS, TIMELINE, CONTACT } from "../data/portfolio";
+import { SKILLS, PROJECTS, QUALIFICATIONS, CONTACT } from "../data/portfolio";
 
-function HomeSection() {
-  return (
-    <div>
-      <div className="home-title glow">ASFANDYAR KHAN</div>
-      <div className="home-subtitle">[ JUNIOR SOFTWARE DEVELOPER ]</div>
+/* ── shared typography helpers ── */
+const H = ({ children }: { children: React.ReactNode }) => (
+  <div style={{
+    fontFamily: "'VT323', monospace",
+    fontSize: 20,
+    color: "#00FF41",
+    letterSpacing: 4,
+    textTransform: "uppercase" as const,
+    borderBottom: "1px solid #006615",
+    paddingBottom: 6,
+    marginBottom: 16,
+    textShadow: "0 0 8px rgba(0,255,65,0.4)",
+  }}>{children}</div>
+);
 
-      <div className="status-block">
-        <div className="status-line">DESIGNATION : <span>Junior Software Developer</span></div>
-        <div className="status-line">STATUS      : <span>ACTIVE — Available for Hire</span></div>
-        <div className="status-line">LOCATION    : <span>Alberta, Canada</span></div>
-        <div className="status-line">CLEARANCE   : <span>Full-Stack · Front-End · React / Next.js</span></div>
-        <div className="status-line">TRAINING    : <span>SAIT Software Development Diploma</span></div>
-        <div className="status-line">OBJECTIVE   : <span>First Dev Role — Ready to Deploy</span></div>
-      </div>
+const Label = ({ children }: { children: React.ReactNode }) => (
+  <span style={{
+    fontFamily: "'VT323', monospace",
+    fontSize: 13,
+    color: "#00FF41",
+    letterSpacing: 2,
+    textTransform: "uppercase" as const,
+  }}>{children}</span>
+);
 
-      <div className="status-block">
-        <div className="status-line">◈ Use <span>◄ ►</span> arrows or keyboard to change frequency</div>
-        <div className="status-line">◈ Each frequency contains a transmission</div>
-        <div className="status-line">◈ Navigate the codec to discover my work</div>
-      </div>
+const Body = ({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) => (
+  <p style={{
+    fontFamily: "'Share Tech Mono', monospace",
+    fontSize: 13,
+    color: "#b0b8b0",
+    lineHeight: 1.85,
+    marginBottom: 12,
+    ...style,
+  }}>{children}</p>
+);
 
-      <div style={{ marginTop: '16px', fontFamily: 'VT323, monospace', fontSize: '14px', color: 'var(--green-dark)', letterSpacing: '2px' }}>
-        ▶ SIGNAL STRENGTH: OPTIMAL &nbsp;|&nbsp; ENCRYPTION: NONE &nbsp;|&nbsp; CODEC v4.2.1
-      </div>
-    </div>
-  );
-}
+const Row = ({ label, value }: { label: string; value: string }) => (
+  <div style={{ display: "flex", gap: 8, marginBottom: 6 }}>
+    <span style={{ fontFamily: "'VT323', monospace", fontSize: 14, color: "#00FF41", letterSpacing: 2, flexShrink: 0, minWidth: 120, textTransform: "uppercase" as const }}>{label}</span>
+    <span style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: 13, color: "#b0b8b0" }}>{value}</span>
+  </div>
+);
+
+const Block = ({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) => (
+  <div style={{
+    border: "1px solid #002800",
+    padding: "12px 14px",
+    marginBottom: 14,
+    background: "rgba(0,255,65,0.02)",
+    ...style,
+  }}>{children}</div>
+);
+
+/* ── sections ── */
 
 function AboutSection() {
   return (
     <div>
-      <div className="section-header">// ABOUT ME</div>
-      <div className="status-block" style={{ marginBottom: '14px' }}>
-        <div className="status-line">SUBJECT    : <span>Asfandyar Khan</span></div>
-        <div className="status-line">UNIT       : <span>Software Development</span></div>
-        <div className="status-line">TRAINING   : <span>SAIT — Software Development Diploma</span></div>
-        <div className="status-line">LOCATION   : <span>Alberta, Canada</span></div>
-      </div>
+      <H>// Asfandyar Khan</H>
 
-      <p className="about-text">
-        Highly motivated <span className="hl">Software Development student</span> with hands-on experience building 
-        full-stack web applications using modern technologies such as <span className="hl">React, Next.js,</span> and <span className="hl">Firebase</span>.
-      </p>
-      <p className="about-text">
-        Strong foundation in <span className="hl">front-end development, UI/UX design,</span> and <span className="hl">API integration</span>. 
-        Passionate about developing scalable, user-centered applications and contributing to collaborative development teams.
-      </p>
-      <p className="about-text">
-        During my <span className="hl">SAIT Capstone</span>, I led front-end development of a mental health support platform — 
-        delivering a real-world application with genuine client requirements, third-party integrations 
-        (<span className="hl">Firebase, Azure AI</span>), and a fully responsive, accessible UI.
-      </p>
-      <p className="about-text">
-        I thrive in collaborative environments, take ownership of my work, and bring the same energy 
-        to a pull request as I do to the product. Ready to contribute from day one.
-      </p>
+      <Block>
+        <Row label="Role" value="Junior Software Developer" />
+        <Row label="Location" value="Alberta, Canada" />
+        <Row label="Training" value="SAIT — Software Development Diploma" />
+        <Row label="Status" value="Available for Hire" />
+      </Block>
 
-      <div className="status-block">
-        <div className="status-line">STRENGTHS  : <span>Front-End · API Integration · UI/UX</span></div>
-        <div className="status-line">APPROACH   : <span>User-Centered · Scalable · Collaborative</span></div>
-        <div className="status-line">WORKFLOW   : <span>Agile · GitHub · Code Review</span></div>
-      </div>
+      <Body>
+        Highly motivated software developer with hands-on experience building full-stack web
+        applications using React, Next.js, and Firebase. Strong foundation in front-end
+        development, UI/UX design, and API integration.
+      </Body>
+      <Body>
+        Passionate about developing scalable, user-centred applications and contributing to
+        collaborative teams. During my SAIT Capstone I led front-end development of a real-world
+        mental health platform — delivering a complete application against genuine client
+        requirements, with Firebase and Azure AI integrations.
+      </Body>
+      <Body>
+        Ready to contribute from day one. Fast learner, team-oriented, and genuinely
+        interested in the craft of building great software.
+      </Body>
     </div>
   );
 }
 
 function SkillsSection() {
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    const t = setTimeout(() => setLoaded(true), 100);
-    return () => clearTimeout(t);
-  }, []);
-
   return (
     <div>
-      <div className="section-header">// EQUIPMENT LOADOUT</div>
-      <div className="status-line" style={{ marginBottom: '14px', fontSize: '12px', color: 'var(--green-dark)', fontFamily: 'Share Tech Mono, monospace' }}>
-        ▶ SIGNAL STRENGTH INDICATES PROFICIENCY LEVEL
-      </div>
-      {SKILLS.map((cat) => (
-        <div className="skill-category" key={cat.category}>
-          <div className="skill-category-title">[ {cat.category} ]</div>
-          {cat.items.map((skill) => (
-            <div className="skill-item" key={skill.name}>
-              <div className="skill-name">{skill.name}</div>
-              <div className="skill-bar">
-                <div
-                  className="skill-bar-fill"
-                  style={{ width: loaded ? `${skill.level}%` : '0%' }}
-                />
-              </div>
-              <div className="skill-level">{skill.level}</div>
-            </div>
-          ))}
+      <H>// Skills</H>
+      {Object.entries(SKILLS).map(([category, items]) => (
+        <div key={category} style={{ marginBottom: 18 }}>
+          <div style={{
+            fontFamily: "'VT323', monospace",
+            fontSize: 14,
+            color: "#00FF41",
+            letterSpacing: 3,
+            textTransform: "uppercase" as const,
+            marginBottom: 8,
+            paddingLeft: 8,
+            borderLeft: "2px solid #00FF41",
+          }}>
+            {category}
+          </div>
+          <div style={{ display: "flex", flexWrap: "wrap" as const, gap: 8, paddingLeft: 8 }}>
+            {items.map((skill) => (
+              <span key={skill} style={{
+                fontFamily: "'Share Tech Mono', monospace",
+                fontSize: 13,
+                color: "#b0b8b0",
+                border: "1px solid #002800",
+                padding: "3px 10px",
+                letterSpacing: 1,
+              }}>
+                {skill}
+              </span>
+            ))}
+          </div>
         </div>
       ))}
     </div>
@@ -105,56 +127,122 @@ function SkillsSection() {
 function ProjectsSection() {
   return (
     <div>
-      <div className="section-header">// MISSION FILES</div>
+      <H>// Projects</H>
       {PROJECTS.map((proj) => (
-        <div className="mission-card" key={proj.codename}>
-          <div className="mission-codename">▶ {proj.codename}</div>
-          <div className="mission-name">{proj.name}</div>
-          <div className="mission-objective">{proj.objective}</div>
+        <div key={proj.name} style={{
+          border: "1px solid #002800",
+          padding: 16,
+          marginBottom: 16,
+          background: "rgba(0,255,65,0.02)",
+        }}>
+          <div style={{
+            fontFamily: "'Orbitron', monospace",
+            fontSize: 13,
+            fontWeight: 700,
+            color: "#00FF41",
+            letterSpacing: 2,
+            textTransform: "uppercase" as const,
+            marginBottom: 4,
+          }}>{proj.name}</div>
 
-          {proj.achievements && proj.achievements.length > 0 && (
-            <div style={{ marginBottom: '10px' }}>
-              <div style={{
-                fontFamily: 'VT323, monospace',
-                fontSize: '13px',
-                color: 'var(--green-dim)',
-                letterSpacing: '2px',
-                marginBottom: '4px',
-                textTransform: 'uppercase',
+          <div style={{
+            fontFamily: "'VT323', monospace",
+            fontSize: 15,
+            color: "#6a8a6a",
+            letterSpacing: 2,
+            marginBottom: 12,
+          }}>
+            {proj.role} — {proj.context}
+          </div>
+
+          <Body style={{ marginBottom: 12 }}>{proj.description}</Body>
+
+          <div style={{ marginBottom: 12 }}>
+            {proj.achievements.map((a, i) => (
+              <div key={i} style={{
+                fontFamily: "'Share Tech Mono', monospace",
+                fontSize: 12,
+                color: "#7a9a7a",
+                paddingLeft: 12,
+                lineHeight: 1.8,
               }}>
-                ◈ ACHIEVEMENTS
+                › {a}
               </div>
-              {proj.achievements.map((a, i) => (
-                <div key={i} style={{
-                  fontFamily: 'Share Tech Mono, monospace',
-                  fontSize: '12px',
-                  color: 'var(--green-dark)',
-                  paddingLeft: '12px',
-                  lineHeight: '1.7',
-                }}>
-                  › {a}
-                </div>
-              ))}
-            </div>
-          )}
-
-          <div className="mission-meta">
-            {proj.tech.map((t) => (
-              <span className="mission-tag" key={t}>{t}</span>
             ))}
           </div>
 
-          <div className="mission-links">
-            {proj.github && (
-              <a href={proj.github} target="_blank" rel="noopener noreferrer" className="mission-link">
-                ◈ GITHUB
-              </a>
+          <div style={{ display: "flex", flexWrap: "wrap" as const, gap: 6 }}>
+            {proj.tech.map((t) => (
+              <span key={t} style={{
+                fontFamily: "'VT323', monospace",
+                fontSize: 13,
+                padding: "1px 8px",
+                border: "1px solid #002800",
+                color: "#6a8a6a",
+                letterSpacing: 1,
+                textTransform: "uppercase" as const,
+              }}>{t}</span>
+            ))}
+          </div>
+
+          {(proj.github || proj.live) && (
+            <div style={{ display: "flex", gap: 10, marginTop: 10 }}>
+              {proj.github && (
+                <a href={proj.github} target="_blank" rel="noopener noreferrer" className="mission-link">
+                  GitHub
+                </a>
+              )}
+              {proj.live && (
+                <a href={proj.live} target="_blank" rel="noopener noreferrer" className="mission-link">
+                  Live Demo
+                </a>
+              )}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function QualificationsSection() {
+  return (
+    <div>
+      <H>// Qualifications</H>
+      {QUALIFICATIONS.map((item, i) => (
+        <div key={i} style={{ display: "flex", gap: 16, marginBottom: 24 }}>
+          <div style={{ display: "flex", flexDirection: "column" as const, alignItems: "center", flexShrink: 0 }}>
+            <div style={{
+              width: 10, height: 10,
+              border: "2px solid #00FF41",
+              background: "#00FF41",
+              boxShadow: "0 0 6px rgba(0,255,65,0.4)",
+              marginTop: 4, flexShrink: 0,
+            }} />
+            {i < QUALIFICATIONS.length - 1 && (
+              <div style={{ width: 1, flex: 1, background: "#002800", marginTop: 4 }} />
             )}
-            {proj.live && (
-              <a href={proj.live} target="_blank" rel="noopener noreferrer" className="mission-link">
-                ◈ LIVE DEMO
-              </a>
-            )}
+          </div>
+          <div style={{ flex: 1, paddingBottom: 8 }}>
+            <div style={{
+              fontFamily: "'VT323', monospace", fontSize: 13, color: "#006615",
+              letterSpacing: 2, marginBottom: 3, textTransform: "uppercase" as const,
+            }}>
+              {item.date}
+            </div>
+            <div style={{
+              fontFamily: "'Orbitron', monospace", fontSize: 12, fontWeight: 700,
+              color: "#00FF41", letterSpacing: 2, textTransform: "uppercase" as const, marginBottom: 3,
+            }}>
+              {item.role}
+            </div>
+            <div style={{
+              fontFamily: "'VT323', monospace", fontSize: 16, color: "#6a8a6a",
+              letterSpacing: 2, marginBottom: 8,
+            }}>
+              {item.org}
+            </div>
+            <Body style={{ marginBottom: 0 }}>{item.desc}</Body>
           </div>
         </div>
       ))}
@@ -162,29 +250,30 @@ function ProjectsSection() {
   );
 }
 
-function ExperienceSection() {
+function CertificationsSection() {
   return (
     <div>
-      <div className="section-header">// PERSONNEL DOSSIER</div>
-      <div className="status-block" style={{ marginBottom: '16px' }}>
-        <div className="status-line">CLEARANCE  : <span>LEVEL 2 — TRAINING COMPLETE</span></div>
-        <div className="status-line">UNIT       : <span>SAIT SOFTWARE DEVELOPMENT DIVISION</span></div>
-      </div>
-      <div>
-        {TIMELINE.map((item, i) => (
-          <div className="timeline-item" key={i}>
-            <div className="timeline-marker">
-              <div className="timeline-dot" />
-              {i < TIMELINE.length - 1 && <div className="timeline-line" />}
-            </div>
-            <div className="timeline-content">
-              <div className="timeline-date">[ {item.date} ]</div>
-              <div className="timeline-role">{item.role}</div>
-              <div className="timeline-org">◈ {item.org}</div>
-              <div className="timeline-desc">{item.desc}</div>
-            </div>
-          </div>
-        ))}
+      <H>// Certifications</H>
+      <div style={{
+        border: "1px solid #002800",
+        padding: "24px 20px",
+        textAlign: "center" as const,
+        marginTop: 8,
+      }}>
+        <div style={{
+          fontFamily: "'VT323', monospace",
+          fontSize: 18,
+          color: "#006615",
+          letterSpacing: 4,
+          marginBottom: 10,
+          textTransform: "uppercase" as const,
+        }}>
+          — CHANNEL RESERVED —
+        </div>
+        <Body style={{ textAlign: "center", marginBottom: 0, color: "#4a6a4a" }}>
+          Certifications will be added here as they are completed.
+          <br />This frequency is standing by.
+        </Body>
       </div>
     </div>
   );
@@ -193,53 +282,68 @@ function ExperienceSection() {
 function ContactSection() {
   return (
     <div>
-      <div className="section-header">// TRANSMISSION CHANNELS</div>
-      <div className="status-line" style={{ marginBottom: '16px', fontSize: '13px', color: 'var(--green-dark)', fontFamily: 'Share Tech Mono, monospace' }}>
-        ▶ ALL CHANNELS SECURE — READY TO RECEIVE
+      <H>// Contact</H>
+
+      <div style={{ display: "flex", flexDirection: "column" as const, gap: 10 }}>
+        {[
+          { label: "Email", href: `mailto:${CONTACT.email}`, value: CONTACT.email },
+          { label: "Phone", href: `tel:${CONTACT.phone.replace(/\s/g, "")}`, value: CONTACT.phone },
+          { label: "GitHub", href: `https://${CONTACT.github}`, value: CONTACT.github },
+          { label: "LinkedIn", href: `https://${CONTACT.linkedin}`, value: CONTACT.linkedin },
+          { label: "Location", href: undefined, value: CONTACT.location },
+        ].map(({ label, href, value }) => (
+          <div key={label} style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 14,
+            border: "1px solid #002800",
+            padding: "10px 14px",
+            background: "rgba(0,255,65,0.02)",
+          }}>
+            <Label>{label}</Label>
+            <div style={{ flex: 1, borderLeft: "1px solid #002800", paddingLeft: 14 }}>
+              {href ? (
+                <a href={href} target={href.startsWith("mailto") || href.startsWith("tel") ? undefined : "_blank"} rel="noopener noreferrer" style={{
+                  fontFamily: "'Share Tech Mono', monospace",
+                  fontSize: 13,
+                  color: "#b0b8b0",
+                  textDecoration: "none",
+                  transition: "color 0.15s",
+                }}
+                  onMouseEnter={e => (e.currentTarget.style.color = "#00FF41")}
+                  onMouseLeave={e => (e.currentTarget.style.color = "#b0b8b0")}
+                >
+                  {value}
+                </a>
+              ) : (
+                <span style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: 13, color: "#b0b8b0" }}>{value}</span>
+              )}
+            </div>
+          </div>
+        ))}
       </div>
 
-      <div className="contact-channels">
-        <a href={`mailto:${CONTACT.email}`} className="contact-channel">
-          <div className="channel-freq">EMAIL</div>
-          <div className="channel-label">◈ Direct Signal</div>
-          <div className="channel-value">{CONTACT.email}</div>
-        </a>
-        <a href={`tel:${CONTACT.phone.replace(/\s/g, '')}`} className="contact-channel">
-          <div className="channel-freq">PHONE</div>
-          <div className="channel-label">◈ Voice Channel</div>
-          <div className="channel-value">{CONTACT.phone}</div>
-        </a>
-        <a href={`https://${CONTACT.github}`} target="_blank" rel="noopener noreferrer" className="contact-channel">
-          <div className="channel-freq">GH</div>
-          <div className="channel-label">◈ GitHub Ops</div>
-          <div className="channel-value">{CONTACT.github}</div>
-        </a>
-        <a href={`https://${CONTACT.linkedin}`} target="_blank" rel="noopener noreferrer" className="contact-channel">
-          <div className="channel-freq">LI</div>
-          <div className="channel-label">◈ LinkedIn Field</div>
-          <div className="channel-value">{CONTACT.linkedin}</div>
+      <div style={{ marginTop: 20 }}>
+        <a href="#" className="dossier-btn" onClick={(e) => e.preventDefault()}>
+          Download CV
         </a>
       </div>
 
-      <a href="#" className="dossier-btn" onClick={(e) => e.preventDefault()}>
-        ▼ DOWNLOAD DOSSIER (CV)
-      </a>
-
-      <div className="status-block" style={{ marginTop: '20px' }}>
-        <div className="status-line">◈ <span>Open to:</span> Front-End · Full-Stack · React / Next.js roles</div>
-        <div className="status-line">◈ <span>Availability:</span> Immediate</div>
-        <div className="status-line">◈ <span>Location:</span> Alberta, CA (Open to Remote / Hybrid)</div>
-      </div>
+      <Block style={{ marginTop: 16 }}>
+        <Row label="Open to" value="Front-End · Full-Stack · React / Next.js roles" />
+        <Row label="Availability" value="Immediate" />
+        <Row label="Preference" value="Remote / Hybrid / On-site" />
+      </Block>
     </div>
   );
 }
 
 const SECTION_COMPONENTS: Record<string, React.FC> = {
-  HOME: HomeSection,
   ABOUT: AboutSection,
   SKILLS: SkillsSection,
   PROJECTS: ProjectsSection,
-  EXPERIENCE: ExperienceSection,
+  QUALIFICATIONS: QualificationsSection,
+  CERTIFICATIONS: CertificationsSection,
   CONTACT: ContactSection,
 };
 

@@ -10,41 +10,41 @@ export interface Section {
 export const SECTIONS: Section[] = [
   {
     freq: "140.85",
-    code: "HOME",
-    label: "HOME",
-    dialogue: "Snake, we've intercepted a signal — a junior developer has gone live. Patching you through now. Kept you waiting, huh?",
+    code: "ABOUT",
+    label: "ABOUT",
+    dialogue: "This is Asfandyar Khan — junior software developer, Alberta CA. Full-stack experience, strong front-end skills. Patching you through now.",
     speakerLeft: "ASFANDYAR",
     speakerRight: "COMMAND",
   },
   {
     freq: "141.12",
-    code: "ABOUT",
-    label: "ABOUT",
-    dialogue: "This is Asfandyar. Highly motivated software developer — full-stack experience, strong front-end skills, and a passion for building things that matter.",
+    code: "SKILLS",
+    label: "SKILLS",
+    dialogue: "Equipment loadout confirmed. JavaScript, React, Next.js — all systems operational. Full stack capable.",
     speakerLeft: "ASFANDYAR",
     speakerRight: "COMMAND",
   },
   {
     freq: "142.36",
-    code: "SKILLS",
-    label: "EQUIPMENT",
-    dialogue: "FOXHOUND analyst confirms — subject is equipped for full-stack combat. JavaScript, React, Next.js — all systems operational.",
+    code: "PROJECTS",
+    label: "PROJECTS",
+    dialogue: "Mission files decrypted. One completed operation with real-world client requirements. Dossier follows.",
     speakerLeft: "ASFANDYAR",
     speakerRight: "COMMAND",
   },
   {
     freq: "143.70",
-    code: "PROJECTS",
-    label: "MISSIONS",
-    dialogue: "Mission files decrypted. Capstone operation successfully delivered with real-world client requirements. Review the dossier.",
+    code: "QUALIFICATIONS",
+    label: "QUALIFICATIONS",
+    dialogue: "Personnel file retrieved. SAIT-trained, capstone-hardened. Ready to deploy professionally.",
     speakerLeft: "ASFANDYAR",
     speakerRight: "COMMAND",
   },
   {
     freq: "144.95",
-    code: "EXPERIENCE",
-    label: "DOSSIER",
-    dialogue: "Personnel file retrieved. SAIT-trained. Capstone-hardened. Ready to deploy in a professional environment.",
+    code: "CERTIFICATIONS",
+    label: "CERTS",
+    dialogue: "Certification records pending. This channel is reserved — transmissions incoming.",
     speakerLeft: "ASFANDYAR",
     speakerRight: "COMMAND",
   },
@@ -52,88 +52,50 @@ export const SECTIONS: Section[] = [
     freq: "146.00",
     code: "CONTACT",
     label: "CONTACT",
-    dialogue: "Transmission channels established. Alberta, Canada — all frequencies clear. Make contact when ready.",
+    dialogue: "All channels secure. Alberta, Canada — ready to receive. Make contact when ready.",
     speakerLeft: "ASFANDYAR",
     speakerRight: "COMMAND",
   },
 ];
 
-export const SKILLS = [
-  {
-    category: "LANGUAGES",
-    items: [
-      { name: "JavaScript", level: 88 },
-      { name: "TypeScript", level: 82 },
-      { name: "Python", level: 72 },
-      { name: "HTML / CSS", level: 90 },
-      { name: "Java", level: 65 },
-      { name: "SQL", level: 68 },
-    ],
-  },
-  {
-    category: "FRAMEWORKS & LIBRARIES",
-    items: [
-      { name: "React", level: 88 },
-      { name: "Next.js", level: 84 },
-      { name: "Tailwind CSS", level: 86 },
-      { name: "Node.js", level: 75 },
-      { name: "React Native", level: 68 },
-    ],
-  },
-  {
-    category: "TOOLS & PLATFORMS",
-    items: [
-      { name: "GitHub", level: 85 },
-      { name: "Firebase", level: 78 },
-      { name: "Vercel", level: 80 },
-      { name: "Figma", level: 74 },
-      { name: "Expo", level: 65 },
-      { name: "Azure AI", level: 60 },
-    ],
-  },
-  {
-    category: "CONCEPTS",
-    items: [
-      { name: "REST APIs", level: 84 },
-      { name: "Responsive Design", level: 88 },
-      { name: "UI/UX Design", level: 78 },
-      { name: "Agile Development", level: 76 },
-    ],
-  },
-];
+export const SKILLS = {
+  Languages: ["JavaScript", "TypeScript", "Python", "Java", "SQL", "HTML", "CSS"],
+  "Frameworks & Libraries": ["React", "Next.js", "Node.js", "React Native", "Tailwind CSS"],
+  "Tools & Platforms": ["GitHub", "Firebase", "Vercel", "Expo", "Figma", "VS Code", "Eclipse", "Azure AI"],
+  Concepts: ["Responsive Design", "REST APIs", "UI/UX Design", "Agile Development"],
+};
 
 export const PROJECTS = [
   {
-    codename: "OPERATION MINDBRIDGE",
     name: "Mental Health Support Platform",
-    objective:
-      "Led front-end development of a full-stack mental health support platform connecting patients, volunteers, and healthcare professionals. Designed and implemented a responsive, accessible UI across mobile and desktop. Integrated REST APIs and Firebase for real-time data flow, and Azure AI services for intelligent resource recommendations. Delivered as a capstone project with real-world client requirements.",
+    role: "Lead Front-End Developer",
+    context: "SAIT Capstone Project — Alberta, CA",
+    description:
+      "Full-stack platform connecting patients, volunteers, and healthcare professionals. Led front-end development end-to-end — from responsive UI design through to API integration and Azure AI feature implementation.",
     tech: ["React", "Next.js", "Tailwind CSS", "Firebase", "Azure AI", "REST APIs", "GitHub"],
+    achievements: [
+      "Delivered a fully functional application against real-world client requirements",
+      "Built responsive, accessible UI across mobile and desktop",
+      "Integrated Firebase and Azure AI for real-time data and smart recommendations",
+      "Contributed to a scalable, maintainable front-end architecture",
+    ],
     github: null,
     live: null,
-    achievements: [
-      "Delivered a fully functional full-stack application meeting real-world client requirements",
-      "Improved mobile responsiveness and usability across all devices",
-      "Successfully integrated Firebase and Azure AI third-party services",
-      "Contributed to a scalable, maintainable codebase using modern front-end architecture",
-    ],
   },
 ];
 
-export const TIMELINE = [
-  {
-    date: "JAN 2024 — AUG 2025",
-    role: "Software Development Diploma",
-    org: "Southern Alberta Institute of Technology (SAIT)",
-    desc: "Completed a Software Development Diploma covering front-end and back-end development, UI/UX design, databases, APIs, and modern software engineering practices.",
-    type: "education",
-  },
+export const QUALIFICATIONS = [
   {
     date: "JAN 2025 — AUG 2025",
     role: "Lead Front-End Developer",
     org: "SAIT Capstone Project — Alberta, CA",
-    desc: "Led front-end development of a mental health support platform. Designed and built responsive UI with React, Next.js, and Tailwind CSS. Integrated Firebase and Azure AI services. Coordinated team contributions via GitHub and collaborated closely with back-end developers to ensure seamless API integration.",
-    type: "work",
+    desc: "Led front-end development of a mental health platform. Built responsive UI with React, Next.js, and Tailwind CSS. Integrated Firebase and Azure AI. Coordinated team contributions via GitHub.",
+  },
+  {
+    date: "JAN 2024 — AUG 2025",
+    role: "Software Development Diploma",
+    org: "Southern Alberta Institute of Technology (SAIT)",
+    desc: "Diploma covering front-end and back-end development, UI/UX design, databases, REST APIs, and modern software engineering practices.",
   },
 ];
 
