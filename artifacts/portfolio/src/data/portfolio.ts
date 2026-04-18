@@ -96,6 +96,6 @@ export const CONTACT = {
   email: "Asfand0306@gmail.com",
   phone: "+1 (403) 918-1817",
   location: "Alberta, CA",
-  github: "github.com/asfandkhan",
-  linkedin: "linkedin.com/in/asfandyarkhan",
+  github: "github.com/Asfand0306",
+  linkedin: "linkedin.com/in/asfand-khan-7a8a971aa/",
 };

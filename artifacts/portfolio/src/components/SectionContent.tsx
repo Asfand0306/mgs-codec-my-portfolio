@@ -398,10 +398,6 @@ function ContactSection() {
         })}
       </div>
 
-      <a href="#" className="dossier-btn" style={{ marginTop: 20 }} onClick={(e) => e.preventDefault()}>
-        Download CV
-      </a>
-
       <Block style={{ marginTop: 16 }}>
         <Row label="Open to"     value="Front-End · Full-Stack · React / Next.js" />
         <Row label="Available"   value="Immediately" />
