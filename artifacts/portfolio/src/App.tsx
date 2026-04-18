@@ -3,26 +3,48 @@ import { SECTIONS } from "./data/portfolio";
 import { PortraitPanel } from "./components/PortraitPanel";
 import { SectionContent } from "./components/SectionContent";
 import { TypewriterText } from "./components/TypewriterText";
+import { FrequencyDisplay } from "./components/FrequencyDisplay";
 import "./index.css";
 
+/* ─── Audio hook ─────────────────────────────────────────────────── */
 function useAudio(muted: boolean) {
-  const audioCtx = useRef<AudioContext | null>(null);
+  const ctxRef      = useRef<AudioContext | null>(null);
+  const analyserRef = useRef<AnalyserNode | null>(null);
+  const masterRef   = useRef<GainNode | null>(null);
 
-  const getCtx = useCallback(() => {
-    if (!audioCtx.current) {
-      audioCtx.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+  /** Lazily create and return the master gain node (and analyser on first call). */
+  const getOutput = useCallback((): GainNode | null => {
+    if (ctxRef.current) return masterRef.current;
+    try {
+      const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      ctxRef.current = ctx;
+
+      // Graph: sources → master gain → analyser → destination
+      const analyser = ctx.createAnalyser();
+      analyser.fftSize = 64;               // 32 frequency bins
+      analyser.smoothingTimeConstant = 0.75;
+      analyser.connect(ctx.destination);
+      analyserRef.current = analyser;
+
+      const master = ctx.createGain();
+      master.connect(analyser);
+      masterRef.current = master;
+
+      return master;
+    } catch {
+      return null;
     }
-    return audioCtx.current;
   }, []);
 
   const playBeep = useCallback(() => {
     if (muted) return;
     try {
-      const ctx = getCtx();
+      const ctx = ctxRef.current || (() => { getOutput(); return ctxRef.current; })()!;
+      const output = masterRef.current!;
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.connect(gain);
-      gain.connect(ctx.destination);
+      gain.connect(output);
       osc.frequency.setValueAtTime(880, ctx.currentTime);
       osc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 0.1);
       gain.gain.setValueAtTime(0.15, ctx.currentTime);
@@ -30,66 +52,69 @@ function useAudio(muted: boolean) {
       osc.start(ctx.currentTime);
       osc.stop(ctx.currentTime + 0.25);
     } catch {}
-  }, [muted, getCtx]);
+  }, [muted, getOutput]);
 
   const playStatic = useCallback(() => {
     if (muted) return;
     try {
-      const ctx = getCtx();
-      const bufferSize = ctx.sampleRate * 0.15;
+      const ctx = ctxRef.current || (() => { getOutput(); return ctxRef.current; })()!;
+      const output = masterRef.current!;
+      const bufferSize = ctx.sampleRate * 0.18;
       const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
       const data = buffer.getChannelData(0);
-      for (let i = 0; i < bufferSize; i++) {
-        data[i] = (Math.random() * 2 - 1) * 0.12;
-      }
+      for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1) * 0.14;
       const source = ctx.createBufferSource();
       source.buffer = buffer;
       const gain = ctx.createGain();
-      gain.gain.setValueAtTime(0.3, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+      gain.gain.setValueAtTime(0.35, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
       source.connect(gain);
-      gain.connect(ctx.destination);
+      gain.connect(output);
       source.start();
     } catch {}
-  }, [muted, getCtx]);
+  }, [muted, getOutput]);
 
   const playCodecOpen = useCallback(() => {
     if (muted) return;
     try {
-      const ctx = getCtx();
-      const freqs = [440, 880, 660, 1100];
-      freqs.forEach((freq, i) => {
+      const ctx = ctxRef.current || (() => { getOutput(); return ctxRef.current; })()!;
+      const output = masterRef.current!;
+      [440, 880, 660, 1100].forEach((freq, i) => {
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.connect(gain);
-        gain.connect(ctx.destination);
+        gain.connect(output);
         osc.frequency.value = freq;
-        const startTime = ctx.currentTime + i * 0.08;
-        gain.gain.setValueAtTime(0, startTime);
-        gain.gain.linearRampToValueAtTime(0.1, startTime + 0.02);
-        gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.12);
-        osc.start(startTime);
-        osc.stop(startTime + 0.12);
+        const t = ctx.currentTime + i * 0.08;
+        gain.gain.setValueAtTime(0, t);
+        gain.gain.linearRampToValueAtTime(0.1, t + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
+        osc.start(t);
+        osc.stop(t + 0.12);
       });
     } catch {}
-  }, [muted, getCtx]);
+  }, [muted, getOutput]);
 
-  return { playBeep, playStatic, playCodecOpen };
+  /** Initialise audio context on first user interaction so the
+      analyser is ready before any sound plays. */
+  const prime = useCallback(() => { getOutput(); }, [getOutput]);
+
+  return { playBeep, playStatic, playCodecOpen, prime, analyserRef };
 }
 
+/* ─── App ────────────────────────────────────────────────────────── */
 export default function App() {
-  const [booting, setBooting] = useState(true);
+  const [booting, setBooting]           = useState(true);
   const [sectionIndex, setSectionIndex] = useState(0);
-  const [muted, setMuted] = useState(true);
+  const [muted, setMuted]               = useState(true);
   const [transitioning, setTransitioning] = useState(false);
-  const [dialogueKey, setDialogueKey] = useState(0);
+  const [dialogueKey, setDialogueKey]   = useState(0);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const { playBeep, playStatic, playCodecOpen } = useAudio(muted);
+  const { playBeep, playStatic, playCodecOpen, prime, analyserRef } = useAudio(muted);
 
   const section = SECTIONS[sectionIndex];
 
-  // Boot sequence
   useEffect(() => {
     const t = setTimeout(() => {
       setBooting(false);
@@ -125,15 +150,19 @@ export default function App() {
     }, 350);
   }, [sectionIndex, transitioning, playStatic, playBeep]);
 
-  // Keyboard navigation
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
-      if (e.key === "ArrowLeft") navigate(-1);
+      if (e.key === "ArrowLeft")  navigate(-1);
       if (e.key === "ArrowRight") navigate(1);
     }
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
   }, [navigate]);
+
+  const toggleMute = () => {
+    prime(); // ensure AudioContext exists on first interaction
+    setMuted((m) => !m);
+  };
 
   return (
     <>
@@ -145,11 +174,8 @@ export default function App() {
             <div className="boot-progress-fill" />
           </div>
           <div style={{
-            fontFamily: 'VT323, monospace',
-            fontSize: '14px',
-            color: 'var(--green-dark)',
-            letterSpacing: '3px',
-            marginTop: '8px',
+            fontFamily: "VT323, monospace", fontSize: 14,
+            color: "var(--green-dark)", letterSpacing: 3, marginTop: 8,
           }}>
             INITIALIZING TRANSMISSION...
           </div>
@@ -164,32 +190,28 @@ export default function App() {
       <div className="codec-outer">
         <div className="codec-screen">
 
-          {/* Static transition overlay */}
-          <div className={`static-overlay ${transitioning ? 'active' : ''}`} />
+          <div className={`static-overlay ${transitioning ? "active" : ""}`} />
 
           {/* Top bar */}
           <div className="codec-topbar">
             <div className="codec-topbar-label">◈ CODEC SYSTEM — ACTIVE</div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
               <div className="signal-indicator">
                 {[1,2,3,4,5].map(i => <div key={i} className="signal-bar" />)}
               </div>
               <button
-                className={`mute-toggle ${!muted ? 'active' : ''}`}
-                onClick={() => setMuted(!muted)}
+                className={`mute-toggle ${!muted ? "active" : ""}`}
+                onClick={toggleMute}
               >
-                {muted ? '🔇 MUTED' : '🔊 SFX ON'}
+                {muted ? "🔇 MUTED" : "🔊 SFX ON"}
               </button>
             </div>
           </div>
 
           {/* Body */}
           <div className="codec-body">
-
-            {/* Left portrait */}
             <PortraitPanel name={section.speaker} side="left" />
 
-            {/* Center panel */}
             <div className="center-panel">
 
               {/* Frequency display */}
@@ -198,38 +220,29 @@ export default function App() {
                   className="freq-nav-btn glow-dim"
                   onClick={() => navigate(-1)}
                   aria-label="Previous frequency"
-                >
-                  ◄
-                </button>
+                >◄</button>
 
-                <div className="freq-display">
-                  <div className={`freq-number ${transitioning ? 'rolling' : ''}`}>
-                    {section.freq}
-                  </div>
-                  <div className="freq-labels">
-                    <span className="freq-label active">PTT</span>
-                    <span className="freq-label active">MEMORY</span>
-                    <span className="freq-label">ENC</span>
-                  </div>
-                </div>
+                <FrequencyDisplay
+                  freq={section.freq}
+                  transitioning={transitioning}
+                  analyser={analyserRef}
+                />
 
                 <button
                   className="freq-nav-btn glow-dim"
                   onClick={() => navigate(1)}
                   aria-label="Next frequency"
-                >
-                  ►
-                </button>
+                >►</button>
               </div>
 
-              {/* Contacts list */}
+              {/* Section directory */}
               <div className="contacts-list">
                 <div className="contacts-label">◈ FREQ DIRECTORY</div>
                 <div className="contacts-grid">
                   {SECTIONS.map((s, i) => (
                     <button
                       key={s.freq}
-                      className={`contact-chip ${i === sectionIndex ? 'active' : ''}`}
+                      className={`contact-chip ${i === sectionIndex ? "active" : ""}`}
                       onClick={() => goToSection(i)}
                     >
                       {s.freq} · {s.label}
@@ -238,19 +251,18 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Content area */}
+              {/* Content */}
               <div
                 className="content-area"
                 ref={contentRef}
-                style={{ opacity: transitioning ? 0.3 : 1, transition: 'opacity 0.2s' }}
+                style={{ opacity: transitioning ? 0.3 : 1, transition: "opacity 0.2s" }}
               >
                 <SectionContent sectionCode={section.code} />
               </div>
             </div>
-
           </div>
 
-          {/* Dialogue */}
+          {/* Dialogue bar */}
           <div className="codec-dialogue">
             <div className="dialogue-label">RECV&gt;</div>
             <TypewriterText key={dialogueKey} text={section.dialogue} speed={28} />
