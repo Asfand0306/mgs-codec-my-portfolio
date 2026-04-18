@@ -44,10 +44,10 @@ const H = ({ children }: { children: React.ReactNode }) => (
   <div style={{
     fontFamily: "'VT323', monospace",
     fontSize: 20,
-    color: "#00FF41",
+    color: "#00DDB0",
     letterSpacing: 4,
     textTransform: "uppercase" as const,
-    borderBottom: "1px solid #002800",
+    borderBottom: "1px solid #002018",
     paddingBottom: 6,
     marginBottom: 18,
     textShadow: "0 0 8px rgba(0,255,65,0.35)",
@@ -68,7 +68,7 @@ const Body = ({ children, style }: { children: React.ReactNode; style?: React.CS
 const Row = ({ label, value }: { label: string; value: string }) => (
   <div style={{ display: "flex", gap: 8, marginBottom: 6, alignItems: "flex-start" }}>
     <span style={{
-      fontFamily: "'VT323', monospace", fontSize: 14, color: "#00FF41",
+      fontFamily: "'VT323', monospace", fontSize: 14, color: "#00DDB0",
       letterSpacing: 2, flexShrink: 0, minWidth: 110, textTransform: "uppercase" as const,
     }}>{label}</span>
     <span style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: 13, color: "#a0b0a0" }}>{value}</span>
@@ -77,7 +77,7 @@ const Row = ({ label, value }: { label: string; value: string }) => (
 
 const Block = ({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) => (
   <div style={{
-    border: "1px solid #002000",
+    border: "1px solid #001a14",
     padding: "12px 14px",
     marginBottom: 14,
     background: "rgba(0,255,65,0.015)",
@@ -88,7 +88,7 @@ const Block = ({ children, style }: { children: React.ReactNode; style?: React.C
 function SkillIcon({ name }: { name: string }) {
   const Icon = SKILL_ICONS[name];
   if (!Icon) return null;
-  return <Icon style={{ color: "#00CC33", flexShrink: 0, opacity: 0.9 }} size={14} />;
+  return <Icon style={{ color: "#00AA85", flexShrink: 0, opacity: 0.9 }} size={14} />;
 }
 
 /* ── sections ── */
@@ -133,12 +133,12 @@ function SkillsSection() {
           <div style={{
             fontFamily: "'VT323', monospace",
             fontSize: 14,
-            color: "#00FF41",
+            color: "#00DDB0",
             letterSpacing: 3,
             textTransform: "uppercase" as const,
             marginBottom: 10,
             paddingLeft: 8,
-            borderLeft: "2px solid #00FF41",
+            borderLeft: "2px solid #00DDB0",
           }}>
             {category}
           </div>
@@ -151,7 +151,7 @@ function SkillsSection() {
                 fontFamily: "'Share Tech Mono', monospace",
                 fontSize: 12,
                 color: "#a0b0a0",
-                border: "1px solid #002800",
+                border: "1px solid #002018",
                 padding: "5px 10px",
                 letterSpacing: 0.5,
                 background: "rgba(0,255,65,0.015)",
@@ -173,7 +173,7 @@ function ProjectsSection() {
       <H>// Projects</H>
       {PROJECTS.map((proj) => (
         <div key={proj.name} style={{
-          border: "1px solid #002000",
+          border: "1px solid #001a14",
           padding: 16,
           marginBottom: 16,
           background: "rgba(0,255,65,0.015)",
@@ -182,7 +182,7 @@ function ProjectsSection() {
             fontFamily: "'Orbitron', monospace",
             fontSize: 13,
             fontWeight: 700,
-            color: "#00FF41",
+            color: "#00DDB0",
             letterSpacing: 2,
             textTransform: "uppercase" as const,
             marginBottom: 3,
@@ -208,7 +208,7 @@ function ProjectsSection() {
                 color: "#6a8a6a",
                 paddingLeft: 10,
                 lineHeight: 1.85,
-                borderLeft: i === 0 ? "1px solid #002000" : undefined,
+                borderLeft: i === 0 ? "1px solid #001a14" : undefined,
                 marginLeft: 0,
               }}>
                 › {a}
@@ -228,12 +228,12 @@ function ProjectsSection() {
                   fontFamily: "'Share Tech Mono', monospace",
                   fontSize: 11,
                   padding: "3px 8px",
-                  border: "1px solid #002000",
+                  border: "1px solid #001a14",
                   color: "#6a8a6a",
                   letterSpacing: 0.5,
                   background: "rgba(0,255,65,0.01)",
                 }}>
-                  {Icon && <Icon size={11} style={{ color: "#00CC33", opacity: 0.8 }} />}
+                  {Icon && <Icon size={11} style={{ color: "#00AA85", opacity: 0.8 }} />}
                   {t}
                 </span>
               );
@@ -269,25 +269,25 @@ function QualificationsSection() {
           <div style={{ display: "flex", flexDirection: "column" as const, alignItems: "center", flexShrink: 0 }}>
             <div style={{
               width: 10, height: 10,
-              border: "2px solid #00FF41",
-              background: "#00FF41",
+              border: "2px solid #00DDB0",
+              background: "#00DDB0",
               boxShadow: "0 0 6px rgba(0,255,65,0.4)",
               marginTop: 4, flexShrink: 0,
             }} />
             {i < QUALIFICATIONS.length - 1 && (
-              <div style={{ width: 1, flex: 1, background: "#002000", marginTop: 4 }} />
+              <div style={{ width: 1, flex: 1, background: "#001a14", marginTop: 4 }} />
             )}
           </div>
           <div style={{ flex: 1, paddingBottom: 8 }}>
             <div style={{
-              fontFamily: "'VT323', monospace", fontSize: 13, color: "#006615",
+              fontFamily: "'VT323', monospace", fontSize: 13, color: "#004535",
               letterSpacing: 2, marginBottom: 3, textTransform: "uppercase" as const,
             }}>
               {item.date}
             </div>
             <div style={{
               fontFamily: "'Orbitron', monospace", fontSize: 12, fontWeight: 700,
-              color: "#00FF41", letterSpacing: 2, textTransform: "uppercase" as const, marginBottom: 3,
+              color: "#00DDB0", letterSpacing: 2, textTransform: "uppercase" as const, marginBottom: 3,
             }}>
               {item.role}
             </div>
@@ -310,7 +310,7 @@ function CertificationsSection() {
     <div>
       <H>// Certifications</H>
       <div style={{
-        border: "1px solid #002000",
+        border: "1px solid #001a14",
         padding: "32px 20px",
         textAlign: "center" as const,
         marginTop: 8,
@@ -319,7 +319,7 @@ function CertificationsSection() {
         <div style={{
           fontFamily: "'VT323', monospace",
           fontSize: 16,
-          color: "#004010",
+          color: "#003428",
           letterSpacing: 4,
           marginBottom: 12,
           textTransform: "uppercase" as const,
@@ -355,23 +355,23 @@ function ContactSection() {
               display: "flex",
               alignItems: "center",
               gap: 14,
-              border: "1px solid #002000",
+              border: "1px solid #001a14",
               padding: "10px 14px",
               background: "rgba(0,255,65,0.015)",
             }}>
               {Icon && (
-                <Icon size={14} style={{ color: "#00FF41", flexShrink: 0, opacity: 0.8 }} />
+                <Icon size={14} style={{ color: "#00DDB0", flexShrink: 0, opacity: 0.8 }} />
               )}
               <span style={{
                 fontFamily: "'VT323', monospace",
                 fontSize: 13,
-                color: "#00FF41",
+                color: "#00DDB0",
                 letterSpacing: 2,
                 textTransform: "uppercase" as const,
                 flexShrink: 0,
                 width: 70,
               }}>{label}</span>
-              <div style={{ flex: 1, borderLeft: "1px solid #002000", paddingLeft: 12 }}>
+              <div style={{ flex: 1, borderLeft: "1px solid #001a14", paddingLeft: 12 }}>
                 {href ? (
                   <a
                     href={href}
@@ -384,7 +384,7 @@ function ContactSection() {
                       textDecoration: "none",
                       transition: "color 0.15s",
                     }}
-                    onMouseEnter={e => (e.currentTarget.style.color = "#00FF41")}
+                    onMouseEnter={e => (e.currentTarget.style.color = "#00DDB0")}
                     onMouseLeave={e => (e.currentTarget.style.color = "#a0b0a0")}
                   >
                     {value}
