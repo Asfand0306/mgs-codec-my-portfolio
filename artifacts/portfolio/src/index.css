@@ -22,6 +22,7 @@
 html, body, #root {
   width: 100%;
   height: 100%;
+  height: 100dvh;
   background: #000;
   overflow: hidden;
 }
@@ -902,40 +903,105 @@ body {
 }
 
 /* Mobile */
-@media (max-width: 700px) {
-  .portrait-panel {
-    width: 80px;
+/* ── Tablet ── */
+@media (max-width: 900px) {
+  .codec-screen {
+    width: 100vw;
+    height: 100dvh;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
   }
 
-  .portrait-name {
+  .portrait-panel {
+    width: 100px;
+  }
+
+  .freq-number {
+    font-size: 30px;
+    min-width: 120px;
+  }
+}
+
+/* ── Mobile ── */
+@media (max-width: 600px) {
+  .codec-screen {
+    width: 100vw;
+    height: 100dvh;
+    border: none;
+    box-shadow: none;
+  }
+
+  /* Hide portrait on very small screens — more room for content */
+  .portrait-panel {
+    display: none;
+  }
+
+  .codec-topbar {
+    padding: 4px 10px;
+  }
+
+  .codec-topbar-label {
     font-size: 11px;
     letter-spacing: 1px;
   }
 
+  .freq-display-area {
+    padding: 8px 12px;
+    gap: 10px;
+  }
+
   .freq-number {
-    font-size: 22px;
+    font-size: 24px;
     letter-spacing: 2px;
     min-width: 100px;
   }
 
+  .freq-nav-btn {
+    font-size: 22px;
+    padding: 2px 10px;
+  }
+
+  .contacts-list {
+    padding: 6px 10px;
+  }
+
+  .contacts-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .contact-chip {
+    font-size: 11px;
+    padding: 1px 6px;
+  }
+
+  .content-area {
+    padding: 12px 12px;
+  }
+
   .codec-dialogue {
-    min-height: 60px;
-    max-height: 80px;
+    min-height: 56px;
+    max-height: 72px;
+    padding: 8px 12px;
   }
 
   .dialogue-text {
     font-size: 12px;
+    line-height: 1.4;
   }
 
-  .contacts-grid {
-    display: none;
+  .dialogue-label {
+    font-size: 11px;
   }
 
-  .section-header {
-    font-size: 18px;
+  .mute-toggle {
+    font-size: 10px;
+    padding: 2px 6px;
   }
 
-  .mission-card::before {
+  .signal-indicator {
     display: none;
   }
 }
