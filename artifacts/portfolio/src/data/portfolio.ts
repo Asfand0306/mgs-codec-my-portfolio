@@ -52,7 +52,7 @@ export const SECTIONS: Section[] = [
 ];
 
 export const SKILLS = {
-  Languages: ["JavaScript", "TypeScript", "Python", "Java", "SQL", "HTML", "CSS"],
+  Languages: ["JavaScript", "TypeScript", "Python", "Java", "HTML", "CSS"],
   "Frameworks & Libraries": ["React", "Next.js", "Node.js", "React Native", "Tailwind CSS"],
   "Tools & Platforms": ["GitHub", "Firebase", "Vercel", "Expo", "Figma", "VS Code", "Eclipse", "Azure AI"],
   Concepts: ["Responsive Design", "REST APIs", "UI/UX Design", "Agile Development"],
