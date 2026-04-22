@@ -160,7 +160,7 @@ function useAudio(muted: boolean) {
 
 /* ─── App ────────────────────────────────────────────────────────── */
 export default function App() {
-  const [booting, setBooting]           = useState(true);
+  const [bootStage, setBootStage]       = useState<"warmup" | "loading" | "off" | "done">("warmup");
   const [sectionIndex, setSectionIndex] = useState(0);
   const [muted, setMuted]               = useState(true);
   const [transitioning, setTransitioning] = useState(false);
@@ -172,11 +172,13 @@ export default function App() {
   const section = SECTIONS[sectionIndex];
 
   useEffect(() => {
-    const t = setTimeout(() => {
-      setBooting(false);
-      playCodecOpen();
-    }, 2200);
-    return () => clearTimeout(t);
+    // CRT power-on warm-up (line scan) → loading text → CRT power-off → main content reveal
+    const timers: number[] = [];
+    timers.push(window.setTimeout(() => setBootStage("loading"), 650));
+    timers.push(window.setTimeout(() => playCodecOpen(),       2150));
+    timers.push(window.setTimeout(() => setBootStage("off"),   2400));
+    timers.push(window.setTimeout(() => setBootStage("done"),  2900));
+    return () => timers.forEach(clearTimeout);
   }, []);
 
   const navigate = useCallback((dir: -1 | 1) => {
@@ -223,17 +225,17 @@ export default function App() {
   return (
     <>
       {/* Boot overlay */}
-      {booting && (
-        <div className="codec-boot">
-          <div className="boot-text">CODEC SYSTEM v4.2.1</div>
-          <div className="boot-progress">
-            <div className="boot-progress-fill" />
-          </div>
-          <div style={{
-            fontFamily: "VT323, monospace", fontSize: 14,
-            color: "var(--green-dark)", letterSpacing: 3, marginTop: 8,
-          }}>
-            INITIALIZING TRANSMISSION...
+      {bootStage !== "done" && (
+        <div className={`codec-boot stage-${bootStage}`}>
+          <div className="boot-crt">
+            <div className="boot-crt-line" />
+            <div className="boot-crt-content">
+              <div className="boot-text">CODEC SYSTEM v4.2.1</div>
+              <div className="boot-progress">
+                <div className="boot-progress-fill" />
+              </div>
+              <div className="boot-subtext">INITIALIZING TRANSMISSION...</div>
+            </div>
           </div>
         </div>
       )}

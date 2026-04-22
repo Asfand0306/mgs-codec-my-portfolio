@@ -1140,31 +1140,136 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
   gap: 16px;
+}
+
+/* CRT-style staged boot */
+.boot-crt {
+  position: relative;
+  width: min(80vw, 520px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Bright thin scan line — the CRT warming up */
+.boot-crt-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  margin-top: -1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(0, 221, 176, 0.0) 5%,
+    rgba(0, 221, 176, 1) 50%,
+    rgba(0, 221, 176, 0.0) 95%,
+    transparent 100%);
+  box-shadow:
+    0 0 10px var(--green),
+    0 0 24px var(--green),
+    0 0 60px var(--green-dim);
+  transform: scaleX(0);
+  opacity: 0;
+  animation: boot-line-scan 0.65s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+@keyframes boot-line-scan {
+  0%   { transform: scaleX(0); opacity: 0; filter: blur(2px); }
+  35%  { transform: scaleX(1); opacity: 1; filter: blur(0); }
+  100% { transform: scaleX(1); opacity: 1; filter: blur(0); }
+}
+
+/* The actual loading content — collapsed at first, expands like a CRT turning on */
+.boot-crt-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  transform: scaleY(0.005);
+  opacity: 0;
+  filter: brightness(3) blur(0);
+  transform-origin: center;
+}
+
+/* Stage 2 — content powers on, line fades */
+.codec-boot.stage-loading .boot-crt-line {
+  animation: boot-line-fade 0.45s ease-out forwards;
+}
+.codec-boot.stage-loading .boot-crt-content {
+  animation: crt-power-on 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes boot-line-fade {
+  0%   { opacity: 1; transform: scaleX(1); filter: blur(0); }
+  100% { opacity: 0; transform: scaleX(1.05); filter: blur(2px); }
+}
+
+/* Stage 3 — CRT power-off: collapses back to a thin line, then fades */
+.codec-boot.stage-off .boot-crt-content {
+  animation: crt-power-off 0.45s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+.codec-boot.stage-off {
+  animation: boot-fade-black 0.45s ease-in forwards;
+}
+
+@keyframes crt-power-off {
+  0% {
+    transform: scaleY(1);
+    opacity: 1;
+    filter: brightness(1) blur(0);
+  }
+  40% {
+    transform: scaleY(0.02);
+    opacity: 1;
+    filter: brightness(3) blur(0);
+  }
+  100% {
+    transform: scaleY(0);
+    opacity: 0;
+    filter: brightness(4) blur(1px);
+  }
+}
+
+@keyframes boot-fade-black {
+  0%   { opacity: 1; }
+  60%  { opacity: 1; }
+  100% { opacity: 0; }
 }
 
 .boot-text {
   font-family: 'VT323', monospace;
-  font-size: 20px;
+  font-size: 22px;
   color: var(--green);
   letter-spacing: 4px;
-  text-shadow: 0 0 10px var(--green);
-  animation: boot-blink 0.5s step-end infinite;
+  text-shadow:
+    0 0 6px var(--green),
+    0 0 16px var(--green-dim);
+}
+
+.boot-subtext {
+  font-family: 'VT323', monospace;
+  font-size: 13px;
+  color: var(--green-dim);
+  letter-spacing: 4px;
+  opacity: 0.85;
+  animation: boot-blink 1s step-end infinite;
 }
 
 .boot-progress {
-  width: 300px;
-  height: 4px;
-  background: #001a14;
+  width: min(60vw, 320px);
+  height: 3px;
+  background: rgba(0, 221, 176, 0.08);
   border: 1px solid var(--green-dark);
   overflow: hidden;
+  position: relative;
 }
 
 .boot-progress-fill {
   height: 100%;
-  background: var(--green);
-  animation: boot-load 1.8s ease-out forwards;
+  background: linear-gradient(90deg, var(--green-dim), var(--green));
+  animation: boot-load 1.5s cubic-bezier(0.4, 0.05, 0.3, 1) forwards;
   box-shadow: 0 0 8px var(--green-glow);
 }
 
@@ -1178,10 +1283,3 @@ body {
   50% { opacity: 0; }
 }
 
-.codec-boot.fade-out {
-  animation: fade-out 0.5s ease-out forwards;
-}
-
-@keyframes fade-out {
-  to { opacity: 0; pointer-events: none; }
-}
