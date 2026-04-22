@@ -175,9 +175,9 @@ export default function App() {
     // CRT power-on warm-up (line scan) → loading text → CRT power-off → main content reveal
     const timers: number[] = [];
     timers.push(window.setTimeout(() => setBootStage("loading"), 650));
-    timers.push(window.setTimeout(() => playCodecOpen(),       2150));
-    timers.push(window.setTimeout(() => setBootStage("off"),   2400));
-    timers.push(window.setTimeout(() => setBootStage("done"),  2900));
+    timers.push(window.setTimeout(() => playCodecOpen(),       2250));
+    timers.push(window.setTimeout(() => setBootStage("off"),   2500));
+    timers.push(window.setTimeout(() => setBootStage("done"),  3050));
     return () => timers.forEach(clearTimeout);
   }, []);
 
