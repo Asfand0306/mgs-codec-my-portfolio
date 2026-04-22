@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { SECTIONS } from "./data/portfolio";
-import { PortraitPanel } from "./components/PortraitPanel";
 import { SectionContent } from "./components/SectionContent";
 import { TypewriterText } from "./components/TypewriterText";
 import { FrequencyDisplay } from "./components/FrequencyDisplay";
@@ -184,6 +183,7 @@ export default function App() {
 
       {/* CRT effects */}
       <div className="crt-overlay" />
+      <div className="crt-noise" />
       <div className="crt-vignette" />
 
       {/* Main codec */}
@@ -210,8 +210,6 @@ export default function App() {
 
           {/* Body */}
           <div className="codec-body">
-            <PortraitPanel name={section.speaker} side="left" />
-
             <div className="center-panel">
 
               {/* Frequency display */}
@@ -252,12 +250,13 @@ export default function App() {
               </div>
 
               {/* Content */}
-              <div
-                className="content-area"
-                ref={contentRef}
-                style={{ opacity: transitioning ? 0.3 : 1, transition: "opacity 0.2s" }}
-              >
-                <SectionContent sectionCode={section.code} />
+              <div className="content-area" ref={contentRef}>
+                <div
+                  key={dialogueKey}
+                  className={`crt-screen ${transitioning ? "crt-off" : "crt-on"}`}
+                >
+                  <SectionContent sectionCode={section.code} />
+                </div>
               </div>
             </div>
           </div>

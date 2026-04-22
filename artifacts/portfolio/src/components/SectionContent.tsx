@@ -98,28 +98,60 @@ function AboutSection() {
     <div>
       <H>// Asfandyar Khan</H>
 
-      <Block>
-        <Row label="Role"     value="Junior Software Developer" />
-        <Row label="Location" value="Alberta, Canada" />
-        <Row label="Training" value="SAIT — Software Development Diploma" />
-        <Row label="Status"   value="Available for Hire" />
-      </Block>
+      <div className="about-grid">
+        <div className="about-photo-frame">
+          <div className="corner corner-tl" />
+          <div className="corner corner-tr" />
+          <div className="corner corner-bl" />
+          <div className="corner corner-br" />
+          <img
+            src="/me.jpg"
+            alt="Asfandyar Khan"
+            className="about-photo"
+            onError={(e) => {
+              const el = e.currentTarget;
+              el.style.display = "none";
+              const ph = el.nextElementSibling as HTMLElement | null;
+              if (ph) ph.style.display = "flex";
+            }}
+          />
+          <div className="about-photo-placeholder">
+            <div style={{ fontFamily: "'VT323', monospace", fontSize: 14, color: "#00AA85", letterSpacing: 2 }}>
+              [ NO SIGNAL ]
+            </div>
+            <div style={{ fontFamily: "'Share Tech Mono', monospace", fontSize: 10, color: "#5a7a5a", marginTop: 8, textAlign: "center", padding: "0 10px" }}>
+              place photo at<br/><code>public/me.jpg</code>
+            </div>
+          </div>
+          <div className="about-photo-scanlines" />
+          <div className="about-photo-label">SUBJECT — A. KHAN</div>
+        </div>
 
-      <Body>
-        Highly motivated software developer with hands-on experience building full-stack web
-        applications using React, Next.js, and Firebase. Strong foundation in front-end
-        development, UI/UX design, and API integration.
-      </Body>
-      <Body>
-        Passionate about developing scalable, user-centred applications and contributing to
-        collaborative teams. During my SAIT Capstone I led front-end development of a real-world
-        mental health platform — delivering against genuine client requirements, with Firebase
-        and Azure AI integrations.
-      </Body>
-      <Body>
-        Ready to contribute from day one. Fast learner, team-oriented, and genuinely
-        invested in building great software.
-      </Body>
+        <div className="about-info">
+          <Block>
+            <Row label="Role"     value="Junior Software Developer" />
+            <Row label="Location" value="Alberta, Canada" />
+            <Row label="Training" value="SAIT — Software Development Diploma" />
+            <Row label="Status"   value="Available for Hire" />
+          </Block>
+
+          <Body>
+            Highly motivated software developer with hands-on experience building full-stack web
+            applications using React, Next.js, and Firebase. Strong foundation in front-end
+            development, UI/UX design, and API integration.
+          </Body>
+          <Body>
+            Passionate about developing scalable, user-centred applications and contributing to
+            collaborative teams. During my SAIT Capstone I led front-end development of a real-world
+            mental health platform — delivering against genuine client requirements, with Firebase
+            and Azure AI integrations.
+          </Body>
+          <Body>
+            Ready to contribute from day one. Fast learner, team-oriented, and genuinely
+            invested in building great software.
+          </Body>
+        </div>
+      </div>
     </div>
   );
 }
