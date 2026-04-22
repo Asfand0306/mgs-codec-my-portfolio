@@ -3,6 +3,7 @@ import { SECTIONS } from "./data/portfolio";
 import { SectionContent } from "./components/SectionContent";
 import { TypewriterText } from "./components/TypewriterText";
 import { FrequencyDisplay } from "./components/FrequencyDisplay";
+import { CRTNoise } from "./components/CRTNoise";
 import "./index.css";
 
 /* ─── Audio hook ─────────────────────────────────────────────────── */
@@ -183,7 +184,7 @@ export default function App() {
 
       {/* CRT effects */}
       <div className="crt-overlay" />
-      <div className="crt-noise" />
+      <CRTNoise />
       <div className="crt-vignette" />
 
       {/* Main codec */}
