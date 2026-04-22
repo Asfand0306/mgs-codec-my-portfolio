@@ -36,61 +36,117 @@ function useAudio(muted: boolean) {
     }
   }, []);
 
+  /** Tight square-wave blip — the codec page-change/select tone. */
   const playBeep = useCallback(() => {
     if (muted) return;
     try {
       const ctx = ctxRef.current || (() => { getOutput(); return ctxRef.current; })()!;
       const output = masterRef.current!;
+      const t = ctx.currentTime;
+
+      // Bandpass to give it that tinny, narrow-speaker codec quality
+      const bp = ctx.createBiquadFilter();
+      bp.type = "bandpass";
+      bp.frequency.value = 1400;
+      bp.Q.value = 6;
+      bp.connect(output);
+
       const osc = ctx.createOscillator();
+      osc.type = "square";
+      osc.frequency.setValueAtTime(1320, t);
+
       const gain = ctx.createGain();
+      gain.gain.setValueAtTime(0, t);
+      gain.gain.linearRampToValueAtTime(0.18, t + 0.005);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.07);
+
       osc.connect(gain);
-      gain.connect(output);
-      osc.frequency.setValueAtTime(880, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 0.1);
-      gain.gain.setValueAtTime(0.15, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
-      osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + 0.25);
+      gain.connect(bp);
+      osc.start(t);
+      osc.stop(t + 0.08);
     } catch {}
   }, [muted, getOutput]);
 
+  /** Bandpass-filtered noise burst — radio interference between channels. */
   const playStatic = useCallback(() => {
     if (muted) return;
     try {
       const ctx = ctxRef.current || (() => { getOutput(); return ctxRef.current; })()!;
       const output = masterRef.current!;
-      const bufferSize = ctx.sampleRate * 0.18;
+      const t = ctx.currentTime;
+
+      const dur = 0.22;
+      const bufferSize = Math.floor(ctx.sampleRate * dur);
       const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
       const data = buffer.getChannelData(0);
-      for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1) * 0.14;
+      // Pink-ish noise: low-passed random values, more like radio hiss than white noise
+      let lp = 0;
+      for (let i = 0; i < bufferSize; i++) {
+        const w = Math.random() * 2 - 1;
+        lp = lp * 0.6 + w * 0.4;
+        data[i] = (lp * 0.7 + w * 0.3);
+      }
       const source = ctx.createBufferSource();
       source.buffer = buffer;
+
+      // Bandpass — mid/high range, like a small speaker
+      const bp = ctx.createBiquadFilter();
+      bp.type = "bandpass";
+      bp.frequency.value = 1800;
+      bp.Q.value = 0.8;
+
       const gain = ctx.createGain();
-      gain.gain.setValueAtTime(0.35, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
-      source.connect(gain);
+      gain.gain.setValueAtTime(0.001, t);
+      gain.gain.exponentialRampToValueAtTime(0.28, t + 0.015);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + dur);
+
+      source.connect(bp);
+      bp.connect(gain);
       gain.connect(output);
-      source.start();
+      source.start(t);
     } catch {}
   }, [muted, getOutput]);
 
+  /** Classic codec call ring — two paired chirps, "deet-doot · deet-doot". */
   const playCodecOpen = useCallback(() => {
     if (muted) return;
     try {
       const ctx = ctxRef.current || (() => { getOutput(); return ctxRef.current; })()!;
       const output = masterRef.current!;
-      [440, 880, 660, 1100].forEach((freq, i) => {
+      const start = ctx.currentTime;
+
+      // Bandpass shapes the whole ring like it's coming through a tiny speaker
+      const bp = ctx.createBiquadFilter();
+      bp.type = "bandpass";
+      bp.frequency.value = 1500;
+      bp.Q.value = 4;
+      bp.connect(output);
+
+      // pattern: high-low pair, gap, high-low pair
+      // each beep ~70ms, intra-pair gap 30ms, inter-pair gap 140ms
+      const beeps: { f: number; t: number }[] = [
+        { f: 1400, t: 0.00 },
+        { f: 1050, t: 0.10 },
+        { f: 1400, t: 0.34 },
+        { f: 1050, t: 0.44 },
+      ];
+
+      beeps.forEach(({ f, t: offset }) => {
+        const t = start + offset;
         const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain);
-        gain.connect(output);
-        osc.frequency.value = freq;
-        const t = ctx.currentTime + i * 0.08;
-        gain.gain.setValueAtTime(0, t);
-        gain.gain.linearRampToValueAtTime(0.1, t + 0.02);
-        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
+        osc.type = "square";
+        osc.frequency.setValueAtTime(f, t);
+
+        const g = ctx.createGain();
+        g.gain.setValueAtTime(0, t);
+        g.gain.linearRampToValueAtTime(0.14, t + 0.006);
+        g.gain.setValueAtTime(0.14, t + 0.055);
+        g.gain.exponentialRampToValueAtTime(0.001, t + 0.075);
+
+        osc.connect(g);
+        g.connect(bp);
         osc.start(t);
-        osc.stop(t + 0.12);
+        osc.stop(t + 0.085);
       });
     } catch {}
   }, [muted, getOutput]);
