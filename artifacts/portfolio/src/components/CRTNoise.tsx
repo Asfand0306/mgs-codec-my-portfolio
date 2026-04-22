@@ -9,8 +9,8 @@ export function CRTNoise() {
     const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
 
-    const W = 220;
-    const H = 140;
+    const W = 380;
+    const H = 240;
     canvas.width = W;
     canvas.height = H;
 
@@ -31,7 +31,7 @@ export function CRTNoise() {
         buf[i]     = (v * 0.05) | 0;
         buf[i + 1] = v;
         buf[i + 2] = (v * 0.78) | 0;
-        buf[i + 3] = v < 200 ? 0 : 90 + ((Math.random() * 60) | 0);
+        buf[i + 3] = v < 220 ? 0 : 60 + ((Math.random() * 50) | 0);
       }
       ctx.putImageData(img, 0, 0);
     };
