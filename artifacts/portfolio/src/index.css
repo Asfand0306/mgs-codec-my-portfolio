@@ -153,14 +153,13 @@ body {
 
 .codec-screen {
   position: relative;
-  width: min(100vw, 1100px);
-  height: min(100vh, 680px);
+  width: 100vw;
+  height: 100vh;
   background: var(--bg);
-  border: 3px solid var(--red-frame);
+  border: none;
   box-shadow:
-    0 0 0 1px #4a0000,
-    0 0 30px rgba(139, 0, 0, 0.4),
-    inset 0 0 60px rgba(0, 0, 0, 0.8);
+    inset 0 0 80px rgba(0, 0, 0, 0.85),
+    inset 0 0 200px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   overflow: hidden;
